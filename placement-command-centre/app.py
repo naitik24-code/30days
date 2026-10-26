@@ -14,7 +14,10 @@ from flask import Flask, jsonify, render_template, request, session
 
 
 ROOT = Path(__file__).resolve().parent
-DB_PATH = Path(os.environ.get("PLACEMENT_DB", ROOT / "data" / "placement.db"))
+# Vercel's filesystem is read-only except /tmp, so fall back to /tmp there.
+# NOTE: /tmp is ephemeral; set TURSO_DATABASE_URL + TURSO_AUTH_TOKEN for real persistence.
+_default_db = Path("/tmp/placement.db") if os.environ.get("VERCEL") else ROOT / "data" / "placement.db"
+DB_PATH = Path(os.environ.get("PLACEMENT_DB", _default_db))
 TURSO_DATABASE_URL = os.environ.get("TURSO_DATABASE_URL", "").strip()
 TURSO_AUTH_TOKEN = os.environ.get("TURSO_AUTH_TOKEN", "").strip()
 TASKS = ["Aptitude practice", "DSA and coding practice", "Core CS fundamentals", "SQL practice", "Portfolio project work", "Apply to relevant jobs", "LinkedIn networking", "Interview communication practice", "Revise previous coding questions", "End-of-day review"]
@@ -166,8 +169,24 @@ def import_source_pack(db: sqlite3.Connection) -> None:
     db.execute("INSERT INTO app_meta(key,value) VALUES('source_pack_v1',?)", (datetime.now().isoformat(timespec="seconds"),))
 
 
-def initialize() -> None:
+def _already_initialized(db) -> bool:
+    """One cheap query: skip the heavy setup when the DB is already fully prepared (big win over remote Turso)."""
+    try:
+        row = db.execute(
+            "SELECT (SELECT MAX(version) FROM schema_version),"
+            " (SELECT COUNT(*) FROM app_meta WHERE key='source_pack_v1'),"
+            " (SELECT COUNT(*) FROM checklist c JOIN daily_records d ON d.id=c.day_id WHERE d.date=?)",
+            (today().isoformat(),),
+        ).fetchone()
+        return bool(row and (row[0] or 0) >= 3 and row[1] and row[2] >= len(TASKS))
+    except Exception:
+        return False
+
+
+def initialize(force: bool = False) -> None:
     with connect() as db:
+        if not force and _already_initialized(db):
+            return
         db.executescript("""
         CREATE TABLE IF NOT EXISTS schema_version(version INTEGER NOT NULL);
         INSERT INTO schema_version SELECT 1 WHERE NOT EXISTS(SELECT 1 FROM schema_version);
@@ -196,7 +215,11 @@ def initialize() -> None:
         db.execute("INSERT OR IGNORE INTO settings(key,value) VALUES('streak_threshold','6')")
         plan_start = date.fromisoformat(db.execute("SELECT value FROM settings WHERE key='plan_start'").fetchone()[0])
         cursor = max(plan_start, today() - timedelta(days=29))
+        have = {r[0] for r in db.execute("SELECT d.date FROM daily_records d JOIN checklist c ON c.day_id=d.id GROUP BY d.id HAVING COUNT(c.id)>=?", (len(TASKS),))}
         while cursor <= today():
+            if cursor.isoformat() in have:
+                cursor += timedelta(days=1)
+                continue
             db.execute("INSERT OR IGNORE INTO daily_records(date) VALUES(?)", (cursor.isoformat(),))
             day_id = db.execute("SELECT id FROM daily_records WHERE date=?", (cursor.isoformat(),)).fetchone()[0]
             for task in TASKS:
@@ -431,7 +454,7 @@ def save_settings():
         except (ValueError, TypeError): return jsonify(error="Use a valid ISO date."), 400
     with connect() as db:
         for key,value in data.items(): db.execute("INSERT INTO settings(key,value) VALUES(?,?) ON CONFLICT(key) DO UPDATE SET value=excluded.value", (key,str(value)))
-    if "plan_start" in data: initialize()
+    if "plan_start" in data: initialize(force=True)
     return jsonify(ok=True)
 
 
