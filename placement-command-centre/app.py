@@ -15,6 +15,8 @@ from flask import Flask, jsonify, render_template, request, session
 
 ROOT = Path(__file__).resolve().parent
 DB_PATH = Path(os.environ.get("PLACEMENT_DB", ROOT / "data" / "placement.db"))
+TURSO_DATABASE_URL = os.environ.get("TURSO_DATABASE_URL", "").strip()
+TURSO_AUTH_TOKEN = os.environ.get("TURSO_AUTH_TOKEN", "").strip()
 TASKS = ["Aptitude practice", "DSA and coding practice", "Core CS fundamentals", "SQL practice", "Portfolio project work", "Apply to relevant jobs", "LinkedIn networking", "Interview communication practice", "Revise previous coding questions", "End-of-day review"]
 SECTIONS = {"practice": ["questions", "coding", "fundamentals", "interview", "revisions"], "career": ["jobs", "projects"], "progress": ["scorecard", "review", "achievements"], "library": ["guide", "cheatsheet", "rules", "tracker"]}
 
@@ -25,11 +27,20 @@ def today() -> date:
 
 @contextmanager
 def connect():
-    DB_PATH.parent.mkdir(parents=True, exist_ok=True)
-    db = sqlite3.connect(DB_PATH)
-    db.row_factory = sqlite3.Row
-    db.execute("PRAGMA foreign_keys=ON")
-    db.execute("PRAGMA journal_mode=WAL")
+    if TURSO_DATABASE_URL and TURSO_AUTH_TOKEN:
+        import turso_serverless
+
+        url = TURSO_DATABASE_URL
+        if url.startswith("libsql://"):
+            url = "https://" + url[len("libsql://"):]
+        db = turso_serverless.connect(url, auth_token=TURSO_AUTH_TOKEN)
+        db.row_factory = turso_serverless.Row
+    else:
+        DB_PATH.parent.mkdir(parents=True, exist_ok=True)
+        db = sqlite3.connect(DB_PATH)
+        db.row_factory = sqlite3.Row
+        db.execute("PRAGMA foreign_keys=ON")
+        db.execute("PRAGMA journal_mode=WAL")
     try:
         yield db
         db.commit()
