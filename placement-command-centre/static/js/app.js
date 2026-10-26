@@ -11,9 +11,13 @@ const kindNames = {revisions:'Revisions due',coding:'Coding log',fundamentals:'C
 const statusOptions = ['Not Started','Attempted','Solved','Needs Revision','To Apply','Applied','Online Assessment','Interview','Offer','Rejected','On Hold','In Progress','Blocked','Completed'];
 
 async function api(url, options={}) {
-  const response = await fetch(url,{headers:{'Content-Type':'application/json','X-CSRF-Token':$('meta[name="csrf-token"]').content,...(options.headers||{})},...options});
+  const token = $('meta[name="csrf-token"]')?.content || '';
+  const response = await fetch(url,{headers:{'Content-Type':'application/json','X-CSRF-Token':token,...(options.headers||{})},...options});
   const result = response.status===204 ? null : await response.json().catch(()=>({error:'The server returned an unreadable response.'}));
-  if(!response.ok) throw new Error(result?.error||'Something went wrong.');
+  if(!response.ok) {
+    console.error('API Error:', result?.error || response.statusText, 'for', url);
+    throw new Error(result?.error||'Something went wrong.');
+  }
   return result;
 }
 function toast(message){const el=$('#toast');el.textContent=message;el.classList.add('show');clearTimeout(toast.timeout);toast.timeout=setTimeout(()=>el.classList.remove('show'),2400)}

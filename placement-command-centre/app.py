@@ -225,7 +225,7 @@ def payload(db: sqlite3.Connection, day: date | None = None) -> dict:
 
 app = Flask(__name__)
 app.config["JSON_SORT_KEYS"] = False
-app.secret_key = os.environ.get("PLACEMENT_SECRET", secrets.token_hex(32))
+app.secret_key = os.environ.get("PLACEMENT_SECRET", "placement_command_centre_secure_fallback_key_2026")
 
 
 @app.before_request
@@ -240,9 +240,11 @@ def require_csrf_for_changes():
 
 @app.get("/")
 def home():
-    page = render_template("index.html")
     token = f'<meta name="csrf-token" content="{session["csrf_token"]}">'
-    return page.replace('<meta name="theme-color" content="#0a0f1f">', f'<meta name="theme-color" content="#0a0f1f">{token}')
+    page = render_template("index.html", csrf_meta=token)
+    if 'name="csrf-token"' not in page:
+        page = page.replace('<meta name="theme-color" content="#0a0f1f">', f'<meta name="theme-color" content="#0a0f1f">{token}')
+    return page
 
 
 @app.get("/api/today")
