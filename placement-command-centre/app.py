@@ -240,10 +240,12 @@ def payload(db: sqlite3.Connection, day: date | None = None) -> dict:
     record = record_for(db, current)
     tasks = [dict(row) for row in db.execute("SELECT id,title,done FROM checklist WHERE day_id=? ORDER BY id", (record["id"],))]
     history = [dict(row) for row in db.execute("SELECT d.date,COUNT(c.id) total,SUM(c.done) done,d.aptitude,d.aptitude_accuracy,d.coding_attempted,d.coding_solved,d.applications_submitted,d.speaking_minutes,d.sleep,d.energy FROM daily_records d LEFT JOIN checklist c ON c.day_id=d.id WHERE d.date BETWEEN ? AND ? GROUP BY d.id ORDER BY d.date", ((current - timedelta(days=29)).isoformat(), current.isoformat()))]
-    day_number = max(0, min(30, (current - date.fromisoformat(db.execute("SELECT value FROM settings WHERE key='plan_start'").fetchone()[0])).days + 1))
-    roadmap = db.execute("SELECT * FROM curriculum WHERE kind='roadmap' AND ordinal=?", (day_number,)).fetchone()
-    starter = [dict(row) for row in db.execute("SELECT id,ordinal,title,content,completed FROM curriculum WHERE kind='starter' ORDER BY ordinal")]
-    return {"date": current.isoformat(), "record": dict(record), "tasks": tasks, "history": history, "day_number": day_number, "roadmap": dict(roadmap) if roadmap else None, "starter": starter, "settings": {r["key"]: r["value"] for r in db.execute("SELECT key,value FROM settings")}}
+    settings = {r["key"]: r["value"] for r in db.execute("SELECT key,value FROM settings")}
+    day_number = max(0, min(30, (current - date.fromisoformat(settings["plan_start"])).days + 1))
+    rows = db.execute("SELECT * FROM curriculum WHERE (kind='roadmap' AND ordinal=?) OR kind='starter' ORDER BY ordinal", (day_number,)).fetchall()
+    roadmap = next((r for r in rows if r["kind"] == "roadmap"), None)
+    starter = [{k: r[k] for k in ("id", "ordinal", "title", "content", "completed")} for r in rows if r["kind"] == "starter"]
+    return {"date": current.isoformat(), "record": dict(record), "tasks": tasks, "history": history, "day_number": day_number, "roadmap": dict(roadmap) if roadmap else None, "starter": starter, "settings": settings}
 
 
 app = Flask(__name__)
@@ -408,29 +410,46 @@ def reflection():
 @app.get("/api/stats")
 def stats():
     with connect() as db:
-        counts = {kind: db.execute("SELECT COUNT(*) FROM entries WHERE kind=?", (kind,)).fetchone()[0] for kind in ("coding", "fundamentals", "jobs", "projects", "questions")}
-        solved = db.execute("SELECT COUNT(*) FROM entries WHERE kind='coding' AND status='Solved'").fetchone()[0]
-        applied_records = db.execute("SELECT COUNT(*) FROM entries WHERE kind='jobs' AND status IN ('Applied','Online Assessment','Interview','Offer','Rejected')").fetchone()[0]
-        applied_logs = db.execute("SELECT COALESCE(SUM(applications_submitted),0) FROM daily_records").fetchone()[0]
-        applied = max(applied_records, applied_logs)
-        fundamentals_done = db.execute("SELECT COUNT(*) FROM entries WHERE kind='fundamentals' AND status IN ('Completed','Solved','Done')").fetchone()[0]
-        project_done = db.execute("SELECT COUNT(*) FROM entries WHERE kind='projects' AND status IN ('Completed','Done')").fetchone()[0]
-        interview_done = db.execute("SELECT COUNT(*) FROM entries WHERE kind='interview' AND status IN ('Attempted','Practiced','Solved','Completed')").fetchone()[0]
-        active_days = db.execute("SELECT COUNT(*) FROM (SELECT day_id FROM checklist WHERE done=1 GROUP BY day_id)").fetchone()[0]
-        scorecard_attempts = db.execute("SELECT COALESCE(SUM(coding_attempted),0) FROM daily_records").fetchone()[0]
-        scorecard_solved = db.execute("SELECT COALESCE(SUM(coding_solved),0) FROM daily_records").fetchone()[0]
+        t = db.execute(
+            "SELECT"
+            " (SELECT COUNT(*) FROM entries WHERE kind='coding') c_coding,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='fundamentals') c_fund,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='jobs') c_jobs,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='projects') c_proj,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='questions') c_q,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='coding' AND status='Solved') solved,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='jobs' AND status IN ('Applied','Online Assessment','Interview','Offer','Rejected')) applied_records,"
+            " (SELECT COALESCE(SUM(applications_submitted),0) FROM daily_records) applied_logs,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='fundamentals' AND status IN ('Completed','Solved','Done')) fundamentals_done,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='projects' AND status IN ('Completed','Done')) project_done,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='interview' AND status IN ('Attempted','Practiced','Solved','Completed')) interview_done,"
+            " (SELECT COUNT(*) FROM (SELECT day_id FROM checklist WHERE done=1 GROUP BY day_id)) active_days,"
+            " (SELECT COALESCE(SUM(coding_attempted),0) FROM daily_records) scorecard_attempts,"
+            " (SELECT COALESCE(SUM(coding_solved),0) FROM daily_records) scorecard_solved,"
+            " (SELECT value FROM settings WHERE key='streak_threshold') threshold,"
+            " (SELECT COUNT(*) FROM checklist WHERE done=1) done_total"
+        ).fetchone()
+        counts = {"coding": t["c_coding"], "fundamentals": t["c_fund"], "jobs": t["c_jobs"], "projects": t["c_proj"], "questions": t["c_q"]}
+        solved = t["solved"]
+        applied = max(t["applied_records"], t["applied_logs"])
+        fundamentals_done = t["fundamentals_done"]
+        project_done = t["project_done"]
+        interview_done = t["interview_done"]
+        active_days = t["active_days"]
+        scorecard_attempts = t["scorecard_attempts"]
+        scorecard_solved = t["scorecard_solved"]
         readiness_parts = [("Coding", min(100, max(solved, scorecard_solved) * 5), 25), ("Fundamentals", min(100, fundamentals_done / 18 * 100), 20), ("Projects", min(100, project_done / 15 * 100), 20), ("Applications", min(100, applied / 10 * 100), 15), ("Interview practice", min(100, interview_done / 20 * 100), 10), ("Consistency", min(100, active_days / 20 * 100), 10)]
         has_activity = any((solved, scorecard_solved, fundamentals_done, project_done, applied, interview_done, active_days, scorecard_attempts))
         readiness_score = round(sum(score * weight for _, score, weight in readiness_parts) / 100) if has_activity else None
         done = db.execute("SELECT d.date,COUNT(*) completed FROM checklist c JOIN daily_records d ON d.id=c.day_id WHERE c.done=1 GROUP BY d.date ORDER BY d.date DESC").fetchall()
-        threshold = int(db.execute("SELECT value FROM settings WHERE key='streak_threshold'").fetchone()[0])
+        threshold = int(t["threshold"])
         streak = 0
         expected = today()
         completed_by_day = {date.fromisoformat(r["date"]): r["completed"] for r in done}
         while completed_by_day.get(expected, 0) >= threshold:
             streak += 1
             expected -= timedelta(days=1)
-        return jsonify(counts=counts, solved=solved, applied=applied, streak=streak, xp=solved*20+applied*15+db.execute("SELECT COUNT(*) FROM checklist WHERE done=1").fetchone()[0]*5, threshold=threshold, readiness={"score":readiness_score,"breakdown":[{"name":name,"score":round(score)} for name,score,_ in readiness_parts],"interview_count":interview_done,"project_count":project_done})
+        return jsonify(counts=counts, solved=solved, applied=applied, streak=streak, xp=solved*20+applied*15+t["done_total"]*5, threshold=threshold, readiness={"score":readiness_score,"breakdown":[{"name":name,"score":round(score)} for name,score,_ in readiness_parts],"interview_count":interview_done,"project_count":project_done})
 
 
 @app.get("/api/settings")
@@ -482,10 +501,24 @@ def focus_total():
 @app.get("/api/review")
 def weekly_review():
     start = (today() - timedelta(days=today().weekday())).isoformat()
+    end = today().isoformat()
     with connect() as db:
-        row = db.execute("SELECT * FROM weekly_reviews WHERE week_start=?", (start,)).fetchone()
-        scorecard = db.execute("SELECT COALESCE(SUM(aptitude),0) aptitude,COALESCE(SUM(coding_attempted),0) attempted,COALESCE(SUM(coding_solved),0) scorecard_solved,COALESCE(SUM(applications_submitted),0) applications,COALESCE(SUM(linkedin_requests),0) networking,COALESCE(SUM(speaking_minutes),0) speaking FROM daily_records WHERE date BETWEEN ? AND ?", (start,today().isoformat())).fetchone()
-        return jsonify(week_start=start, focus=row["focus"] if row else "", checklist_done=db.execute("SELECT COUNT(*) FROM checklist c JOIN daily_records d ON d.id=c.day_id WHERE d.date BETWEEN ? AND ? AND c.done=1",(start,today().isoformat())).fetchone()[0], solved=db.execute("SELECT COUNT(*) FROM entries WHERE kind='coding' AND status='Solved' AND date(updated_at) BETWEEN ? AND ?",(start,today().isoformat())).fetchone()[0], applications=db.execute("SELECT COUNT(*) FROM entries WHERE kind='jobs' AND status NOT IN ('To Apply','Not Started') AND date(updated_at) BETWEEN ? AND ?",(start,today().isoformat())).fetchone()[0], scorecard=dict(scorecard))
+        r = db.execute(
+            "SELECT"
+            " (SELECT focus FROM weekly_reviews WHERE week_start=?) focus,"
+            " (SELECT COALESCE(SUM(aptitude),0) FROM daily_records WHERE date BETWEEN ? AND ?) aptitude,"
+            " (SELECT COALESCE(SUM(coding_attempted),0) FROM daily_records WHERE date BETWEEN ? AND ?) attempted,"
+            " (SELECT COALESCE(SUM(coding_solved),0) FROM daily_records WHERE date BETWEEN ? AND ?) scorecard_solved,"
+            " (SELECT COALESCE(SUM(applications_submitted),0) FROM daily_records WHERE date BETWEEN ? AND ?) applications,"
+            " (SELECT COALESCE(SUM(linkedin_requests),0) FROM daily_records WHERE date BETWEEN ? AND ?) networking,"
+            " (SELECT COALESCE(SUM(speaking_minutes),0) FROM daily_records WHERE date BETWEEN ? AND ?) speaking,"
+            " (SELECT COUNT(*) FROM checklist c JOIN daily_records d ON d.id=c.day_id WHERE d.date BETWEEN ? AND ? AND c.done=1) checklist_done,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='coding' AND status='Solved' AND date(updated_at) BETWEEN ? AND ?) solved,"
+            " (SELECT COUNT(*) FROM entries WHERE kind='jobs' AND status NOT IN ('To Apply','Not Started') AND date(updated_at) BETWEEN ? AND ?) job_apps",
+            (start, *(start, end) * 9),
+        ).fetchone()
+        scorecard = {k: r[k] for k in ("aptitude", "attempted", "scorecard_solved", "applications", "networking", "speaking")}
+        return jsonify(week_start=start, focus=r["focus"] or "", checklist_done=r["checklist_done"], solved=r["solved"], applications=r["job_apps"], scorecard=scorecard)
 
 
 @app.put("/api/review")
