@@ -1,0 +1,19 @@
+﻿Order,Concept,You must be able to answer,You are ready to move on when…,Common trap
+1,How a program runs,"What are input, processing, output, syntax, runtime and logic errors?",You can trace a 5-line program and explain its output.,Memorizing syntax without tracing.
+2,Variables and assignment,What changes when x=x+1? What is a variable's current value?,You can trace variable updates line by line.,Thinking = means mathematical equality.
+3,Types and conversion,"Difference between 5, 5.0, '5', True; when do conversions fail?",You can predict types and avoid accidental string concatenation.,Assuming input is numeric automatically.
+4,Operators and precedence,"Difference between /, //, %, ==, !=, and/or/not; precedence?",You can evaluate expressions manually and use parentheses clearly.,Guessing precedence.
+5,Input and output,How do I read input and print exactly what the prompt requests?,You can solve tiny input/output exercises with correct format.,Extra prompts/text breaking judge output.
+6,Conditions and boolean logic,How do if/elif/else and nested conditions execute?,You pass boundary tests for ranges and classifications.,Missing equality/boundary cases.
+7,Loops and iteration,How many iterations run? What changes each iteration?,You can trace for/while loops and prove termination.,Off-by-one and infinite loops.
+8,Counters and accumulators,"When should initial value be 0, 1, first item or None?","You can calculate sum, count, product, min and max correctly.",Bad initialization.
+9,Functions and return,Parameters vs arguments? Return vs print? Local vs global?,You can write reusable functions and test return values.,Everything placed in one giant function.
+10,Collections,"List/array, tuple, set, dictionary/map: when and why?",You can choose a collection and explain its trade-off.,Using a set when order matters.
+11,Strings and indexing,"What is an index? How do slicing, mutability and normalization work?","You handle empty, one-character, repeated and whitespace cases.",Assuming text is always clean.
+12,Problem decomposition,How do I turn English into steps and pseudocode?,You can write a plan before syntax for 5 problems.,Jumping directly to code.
+13,Testing and debugging,How do I isolate an error and choose edge cases?,"Every solution has normal, boundary and invalid/no-answer tests.",Testing only one sample.
+14,Complexity,How do work and memory grow as input grows?,You can justify common Big-O classifications.,Using complexity labels without reasoning.
+15,Core patterns,"When do I use hashing, two pointers, sliding window, prefix sums, binary search?",You can explain why the pattern fits constraints.,Forcing a memorized pattern onto every problem.
+16,Data structures,"How do stacks, queues, linked lists, trees and graphs behave?",You can implement basic operations and state complexity.,Learning definitions without operations.
+17,SQL and core CS,"How do queries, joins, grouping, transactions, processes and networking work?",You can answer verbally and solve basic exercises.,Reading definitions without examples.
+18,Interview delivery,"How do I clarify, propose brute force, optimize, test and explain?",You can solve and communicate a problem in a timed mock.,Going silent or bluffing.

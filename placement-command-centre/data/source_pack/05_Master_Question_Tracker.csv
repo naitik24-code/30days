@@ -1,0 +1,127 @@
+﻿No.,Study Day,Section,Question / Exercise,Level,Status,Learning Tip / Mental Model,Confidence (1–5),Revisit?,Proof of mastery / expected evidence
+1,Day 1,Understanding code,"Explain the difference between source code, program execution, output and an error.",Beginner,Not Started,"Say what the computer receives, executes and produces.",,,Explain in your own words
+2,Day 1,Input/output,"Read a name and age, then print a formatted sentence.",Beginner,Not Started,Input is usually text first; convert only when arithmetic is needed.,,,Correct output
+3,Day 1,Variables,"Store two values, swap them, and print before/after values.",Beginner,Not Started,Track each assignment in order; use a temporary variable first.,,,Correct trace
+4,Day 1,Data types,"Predict results for integer, float, string and boolean operations.",Beginner,Not Started,"Know type conversion and the difference between 5, '5' and 5.0.",,,Correct predictions
+5,Day 1,Operators,"Predict the result of arithmetic, comparison, logical and remainder operators.",Beginner,Not Started,Check operator precedence; use parentheses when uncertain.,,,Correct predictions
+6,Day 1,Expressions,Evaluate a mixed expression step by step without running it.,Beginner,Not Started,"Parentheses, multiplication/division, addition/subtraction; language rules matter.",,,Correct trace
+7,Day 1,Debugging basics,"Find and fix three syntax, indentation or type errors in a short program.",Beginner,Not Started,Read the exact error message and inspect the line before it too.,,,Working corrected program
+8,Day 1,Input/output,"Read two integers and print sum, difference, product, quotient and remainder.",Beginner,Not Started,Decide how to handle division by zero and integer division.,,,Correct outputs
+9,Day 1,Tracing,Trace a 6-line program and record every variable value after each line.,Beginner,Not Started,Don't guess final output; simulate each statement.,,,Variable trace table
+10,Day 1,Code vocabulary,"Explain statement, expression, variable, literal, operator, argument and return value.",Beginner,Not Started,Use one short code example for every term.,,,Definitions + examples
+11,Day 2,Conditions,Determine output for nested if/elif/else conditions.,Beginner,Not Started,Only the first matching branch in an if/elif chain runs.,,,Correct trace
+12,Day 2,Conditions,Write a grade calculator with boundaries and invalid marks handling.,Beginner,Not Started,"Test 0, each boundary, 100 and invalid values.",,,Correct grade + validation
+13,Day 2,Conditions,Check leap year using the full divisible-by-4/100/400 rule.,Beginner,Not Started,Century years are the trap; write the rule explicitly.,,,"Correct for 1900, 2000, 2024"
+14,Day 2,Conditions,"Classify a character as uppercase, lowercase, digit or special character.",Beginner,Not Started,Consider character categories and input length.,,,Correct classifications
+15,Day 2,Boolean logic,"Predict results of compound conditions using AND, OR and NOT.",Beginner,Not Started,Build a truth table when logic is confusing.,,,Correct truth table
+16,Day 2,Conditions,Determine whether three lengths can form a triangle and classify it.,Beginner,Not Started,Check positive lengths and triangle inequality before classification.,,,Correct classifications
+17,Day 2,Conditions,Find the middle of three values without sorting the whole list.,Beginner,Not Started,Try pairwise comparisons and test equal values.,,,Correct middle value
+18,Day 2,Conditions,Build a simple menu-based calculator and handle invalid operators.,Beginner,Not Started,Separate input validation from calculation.,,,Correct results and error handling
+19,Day 2,Testing,"Create boundary tests for age eligibility, grades and discounts.",Beginner,Not Started,Test exactly at and just around every threshold.,,,Test table
+20,Day 2,Debugging,Fix a condition bug caused by using = instead of == (language-dependent).,Beginner,Not Started,Assignment and comparison are different; syntax varies by language.,,,Working fix
+21,Day 3,Loops,Trace for-loops with range/start/stop/step and predict output.,Beginner,Not Started,"In Python, range stop is excluded; other languages differ.",,,Correct trace
+22,Day 3,Loops,Trace a while-loop and identify whether it terminates.,Beginner,Not Started,Find the state change that makes the condition false.,,,Termination explanation
+23,Day 3,Loops,"Print a rectangle, right triangle and inverted triangle using nested loops.",Beginner,Not Started,Outer loop controls rows; inner loop controls columns.,,,Correct patterns
+24,Day 3,Loops,"Calculate sum, average, count and product from N inputs.",Beginner,Not Started,Track each accumulator separately; handle N=0 if allowed.,,,Correct calculations
+25,Day 3,Loops,Print multiplication tables with formatted columns.,Beginner,Not Started,Use nested loops only when repetition is genuinely two-dimensional.,,,Correct table
+26,Day 3,Loops,Count even/odd values and positive/negative/zero values in a sequence.,Beginner,Not Started,"A number can be zero, positive or negative; classify carefully.",,,Correct counts
+27,Day 3,Loops,Find all divisors and count them; then determine primality.,Beginner,Not Started,"Handle 1, 2 and non-positive inputs explicitly.",,,Correct divisor list/count
+28,Day 3,Loops,"Print primes in a range using a simple method, then optimise it.",Beginner,Not Started,First make it correct; then reduce unnecessary checks.,,,Correct list + comparison
+29,Day 3,Loops,Generate Fibonacci terms and explain why each state update order matters.,Beginner,Not Started,Trace old and new values before assignment.,,,Correct sequence
+30,Day 3,Loops,"Reverse an integer, count digits and sum digits in one pass.",Beginner,Not Started,Repeatedly use remainder and integer division; define negative handling.,,,Correct results
+31,Day 3,Loop control,Use break and continue and explain exactly which iterations are skipped.,Beginner,Not Started,Avoid using control flow that obscures a simple loop.,,,Correct trace
+32,Day 3,Nested loops,Count how many times a nested-loop body runs for different bounds.,Beginner,Not Started,Translate bounds into iteration counts; distinguish n² from n(n-1)/2.,,,Correct count
+33,Day 3,Debugging,Fix off-by-one errors in loops and array indices.,Beginner,Not Started,"Test first, last and one-element cases.",,,Corrected code
+34,Day 4,Functions,Write a function that returns a value and compare it with a version that prints.,Beginner,Not Started,A return value can be reused by the caller; print only displays it.,,,Working tests
+35,Day 4,Functions,"Trace positional arguments, default parameters and local variables.",Beginner,Not Started,Know scope and the order arguments are bound.,,,Correct trace
+36,Day 4,Functions,"Split a calculator into input, calculation and output functions.",Beginner,Not Started,One function should have one clear responsibility.,,,Working program
+37,Day 4,Functions,"Write unit tests for max, absolute difference and leap-year functions.",Beginner,Not Started,"Test normal, boundary and equal-value cases.",,,Test suite
+38,Day 4,Problem decomposition,"Turn a word problem into input, processing, output and pseudocode.",Beginner,Not Started,Do not start with syntax; define the algorithm first.,,,Pseudocode
+39,Day 4,Scope,Explain local vs global variables with a small example.,Beginner,Not Started,Avoid global state unless there is a clear reason.,,,Explanation + code
+40,Day 4,Errors,"Distinguish syntax, runtime and logic errors using examples.",Beginner,Not Started,A program can run and still be logically wrong.,,,Three examples
+41,Day 4,Testing,Use assertions or simple checks to verify function outputs.,Beginner,Not Started,A test should fail when the behavior is wrong.,,,Passing tests
+42,Day 5,Strings,"Index, slice and iterate through strings; predict exact outputs.",Beginner,Not Started,Check inclusive/exclusive slice boundaries and negative indices if using Python.,,,Correct trace
+43,Day 5,Strings,"Count each vowel, consonant, digit, whitespace and punctuation mark.",Beginner,Not Started,Define whether accented letters and case matter for the task.,,,Correct counts
+44,Day 5,Strings,Normalize text and check palindrome with spaces/punctuation ignored.,Beginner,Not Started,Clean only what the prompt says to ignore.,,,Correct test cases
+45,Day 5,Strings,Determine whether two strings are anagrams with frequency counts.,Beginner,Not Started,Check length and character policy first.,,,Correct result
+46,Day 5,Strings,"Find first repeated, first unique and most frequent character.",Beginner,Not Started,Frequency count and original order are different concerns.,,,Correct outputs
+47,Day 5,Strings,"Compress repeated characters, e.g. aaabbc → a3b2c1.",Beginner,Not Started,Track the current run and flush the final run.,,,Correct compression
+48,Day 5,Strings,"Find longest word, last word length and count of words with repeated spaces.",Beginner,Not Started,Split behavior differs when separators are repeated.,,,Correct results
+49,Day 5,Strings,Check whether one string is a rotation of another.,Intermediate,Not Started,Length equality and empty strings matter.,,,Correct result
+50,Day 5,Lists,"Trace append, insert, remove, pop, slicing and aliasing.",Beginner,Not Started,Two names may reference the same mutable list.,,,Correct trace
+51,Day 5,Lists,"Find min, max, sum, average and indices of matching values.",Beginner,Not Started,Handle empty lists and multiple matching indices.,,,Correct outputs
+52,Day 5,Lists,Find second-largest distinct value and define behavior when absent.,Beginner,Not Started,Duplicates do not count as a second distinct value.,,,Correct edge-case behavior
+53,Day 6,Lists,Remove duplicates preserving first-seen order.,Beginner,Not Started,A set checks membership; the result list preserves order.,,,Correct output
+54,Day 6,Lists,Rotate a list left/right by K positions.,Beginner,Not Started,Reduce K modulo length and handle an empty list.,,,Correct output
+55,Day 6,Lists,Merge two sorted lists and explain why the output remains sorted.,Beginner,Not Started,At each step choose the smaller unconsumed value.,,,Correct output
+56,Day 6,Lists,Move zeros to the end while preserving non-zero order.,Beginner,Not Started,Decide whether in-place modification is required.,,,Correct output
+57,Day 6,Lists,"Find pair with target sum using brute force, then a set.",Beginner,Not Started,Explain time/space trade-off and duplicate handling.,,,Both solutions
+58,Day 6,Lists,Find missing and duplicate values in a constrained range.,Intermediate,Not Started,Check range assumptions before using sum/XOR tricks.,,,Correct output
+59,Day 6,Lists,"Find maximum subarray sum: brute force idea, then Kadane's algorithm.",Intermediate,Not Started,All-negative arrays are an important edge case.,,,Correct answer + complexity
+60,Day 6,Lists,Use prefix sums for multiple range-sum queries.,Intermediate,Not Started,Define prefix[i] as sum before index i to simplify boundaries.,,,Correct range answers
+61,Day 6,Lists,Transpose a matrix and calculate row/column sums.,Beginner,Not Started,Rows and columns may have different lengths/counts.,,,Correct matrix
+62,Day 6,Lists,Search a matrix under different ordering assumptions.,Intermediate,Not Started,Do not use a sorted-matrix trick unless assumptions guarantee it.,,,Correct method
+63,Day 7,Weekly review,Solve 5 mixed basics problems without notes and explain every solution.,Practice,Not Started,Review errors before starting new material.,,,5 solutions + error log
+64,Day 8,Hash maps,"Build frequency map; solve anagram, duplicate and first unique problems.",Beginner,Not Started,Use keys for values/characters and values for counts/positions.,,,Correct output
+65,Day 8,Hash maps,Group words that are anagrams.,Intermediate,Not Started,Choose a canonical key such as sorted characters or frequency tuple.,,,Correct groups
+66,Day 8,Two pointers,"Reverse list/string, check palindrome and pair sum in sorted array.",Beginner,Not Started,Know when pointers move inward and why.,,,Correct output
+67,Day 8,Two pointers,Remove duplicates in-place from sorted array.,Intermediate,Not Started,Track write position separately from read position.,,,Correct length and prefix
+68,Day 9,Searching,Implement linear search; return index or a clear not-found value.,Beginner,Not Started,State what happens when the target appears more than once.,,,Correct output
+69,Day 9,Searching,Implement binary search iteratively and recursively.,Beginner,Not Started,Requires sorted input; prove each iteration shrinks the range.,,,Correct output
+70,Day 9,Searching,Find first and last occurrence of a target in sorted data.,Intermediate,Not Started,Modify binary search to keep searching after a match.,,,Correct boundaries
+71,Day 9,Sorting,"Implement bubble, selection and insertion sort.",Beginner,Not Started,Know stable/in-place properties at a basic level and time complexity.,,,Correct sort + complexity
+72,Day 9,Sorting,Compare built-in sort with a manual sort for correctness and maintainability.,Beginner,Not Started,Use built-ins in real work unless manual algorithm is required.,,,Short comparison
+73,Day 10,Recursion,"Trace call stack for factorial, sum of list and Fibonacci.",Beginner,Not Started,Write base case before recursive step.,,,Correct trace
+74,Day 10,Recursion,Generate subsets/permutations for a small input.,Intermediate,Not Started,Backtracking explores choices and undoes changes.,,,Correct outputs
+75,Day 10,Stack,Validate balanced brackets.,Beginner,Not Started,Push opening brackets; match each closing bracket to the top.,,,Correct result
+76,Day 10,Queue,Simulate task processing using a queue.,Beginner,Not Started,FIFO means earliest inserted is removed first.,,,Correct order
+77,Day 10,Complexity,Classify 15 snippets by time and auxiliary space complexity.,Beginner,Not Started,"Count loops, nested loops, halving and extra data structures.",,,Reasoned classifications
+78,Day 11,Linked lists,"Create, traverse, insert and delete nodes, including empty/head cases.",Beginner,Not Started,Draw references before coding.,,,Working operations
+79,Day 11,Linked lists,Reverse a linked list iteratively and explain pointer updates.,Intermediate,Not Started,Save next before redirecting current.next.,,,Correct list
+80,Day 11,Linked lists,Find middle node and detect cycle with slow/fast pointers.,Intermediate,Not Started,State what happens for even-length lists and no cycle.,,,Correct result
+81,Day 11,Trees,"Implement preorder, inorder, postorder and level-order traversal.",Beginner,Not Started,Write the visit order and data structure used.,,,Correct traversal
+82,Day 11,Trees,"Find tree height, node count and maximum depth.",Beginner,Not Started,Choose a consistent height definition and base case.,,,Correct values
+83,Day 12,SQL,"Write SELECT, WHERE, ORDER BY, DISTINCT, LIMIT and NULL checks.",Beginner,Not Started,"NULL requires IS NULL, not equality comparison.",,,Correct query outputs
+84,Day 12,SQL,"GROUP BY, HAVING, COUNT, SUM, AVG and conditional aggregation.",Beginner,Not Started,Know row filtering vs group filtering.,,,Correct aggregates
+85,Day 12,SQL,INNER/LEFT joins; detect rows without matches.,Beginner,Not Started,Understand join keys and duplicate multiplication.,,,Correct result
+86,Day 12,SQL,"Find second-highest salary, top N per group and duplicate rows.",Intermediate,Not Started,"Consider ties, NULLs and window functions if supported.",,,Correct query
+87,Day 13,OOP,"Build a small class with constructor, methods, state and validation.",Beginner,Not Started,Encapsulation means control over state; not just making a class.,,,Working example
+88,Day 13,OOP,Explain inheritance vs composition and polymorphism with examples.,Beginner,Not Started,Choose composition when it models ownership/use better.,,,Explanation + code
+89,Day 13,DBMS,"Explain primary/foreign keys, normalization, indexes and transactions.",Beginner,Not Started,Use a student/course example; describe trade-offs.,,,Recall sheet
+90,Day 13,OS/networking,"Explain process/thread, memory basics, TCP/UDP, DNS/HTTP and TLS.",Beginner,Not Started,Use a simple request journey and compare trade-offs.,,,Oral answers
+91,Day 14,Testing,"Write normal, boundary, invalid and adversarial tests for 5 functions.",Practice,Not Started,Expected outputs must be decided before running code.,,,Test cases
+92,Day 14,Debugging,Debug a program with 5 planted logical errors and document root causes.,Practice,Not Started,Fix one root cause at a time and rerun regression tests.,,,Bug log
+93,Day 14,Mock,"Complete a timed mix of coding, SQL, aptitude and core CS.",Practice,Not Started,"Review reasoning, not only final answers.",,,Score + review
+94,Day 15,Company-style coding,Implement number/base conversion and explain each step.,Intermediate,Not Started,Use quotient/remainder; define valid bases and characters.,,,Correct tests
+95,Day 15,Company-style coding,Solve matrix row/column patterns and diagonal sums.,Beginner,Not Started,Trace row/column indices carefully.,,,Correct output
+96,Day 15,Company-style coding,Count carries in addition and simulate digit operations.,Intermediate,Not Started,Work right-to-left and track carry explicitly.,,,Correct result
+97,Day 16,Sliding window,Maximum sum of fixed-size window.,Beginner,Not Started,Update sum by adding entering and subtracting leaving value.,,,O(n) solution
+98,Day 16,Sliding window,Longest substring without repeating characters.,Intermediate,Not Started,Maintain a valid window and last-seen positions.,,,Correct result + complexity
+99,Day 16,Prefix sums,Equilibrium index and subarray-sum basics.,Intermediate,Not Started,State whether numbers can be negative; method depends on constraints.,,,Correct solution
+100,Day 17,Stacks/queues,Next greater element and stock span basics.,Intermediate,Not Started,Monotonic stack stores unresolved candidates.,,,Correct result
+101,Day 17,Trees,Validate BST and find lowest common ancestor in a binary tree.,Intermediate,Not Started,BST validity needs bounds across the subtree.,,,Correct tests
+102,Day 18,Hashing,"Two-sum, longest consecutive sequence and frequency ranking.",Intermediate,Not Started,Use a set/map to avoid repeated scans.,,,Correct solution + complexity
+103,Day 18,Greedy,Choose non-overlapping intervals / activity selection.,Intermediate,Not Started,Sort by the right criterion and justify the greedy choice.,,,Correct output
+104,Day 19,Dynamic programming,Understand overlapping subproblems and memoization with Fibonacci/stairs.,Intermediate,Not Started,Define state and recurrence before coding.,,,Correct recurrence
+105,Day 19,Dynamic programming,House robber / minimum cost climbing stairs.,Intermediate,Not Started,Define base cases and what dp[i] represents.,,,Correct output
+106,Day 20,Graphs,Represent graph with adjacency list; BFS and DFS.,Intermediate,Not Started,Track visited nodes to avoid repeats/cycles.,,,Correct traversal
+107,Day 20,Graphs,Shortest path in unweighted graph using BFS.,Intermediate,Not Started,Distance is first discovery level in BFS.,,,Correct distances
+108,Day 21,Mock week 3,Complete 2 easy + 1 medium coding problems and explain complexity.,Practice,Not Started,"Time-box, then review the solution honestly.",,,Scores + error log
+109,Day 22,Company assessments,Solve mixed pseudo-code/output tracing questions.,Practice,Not Started,Track variable values and operator precedence exactly.,,,Correct trace
+110,Day 22,Company assessments,Solve SQL + debugging + basic networking/security quiz.,Practice,Not Started,Explain why wrong options are wrong.,,,Score + weak topics
+111,Day 23,OOP / language,"Solve code questions involving scope, mutability, references and exceptions.",Intermediate,Not Started,Language behavior matters; test tiny examples.,,,Correct explanation
+112,Day 23,Data handling,"Read CSV, validate missing values, transform columns and report basic summaries in Python.",Intermediate,Not Started,Inspect shape/types/missingness before analysis.,,,Reproducible script
+113,Day 24,API / engineering basics,"Explain HTTP request/response, JSON, status codes and API error handling.",Beginner,Not Started,Know common 2xx/4xx/5xx families and validation.,,,Small example
+114,Day 24,Git,"Practise status, diff, add, commit, branch, merge and conflict basics.",Beginner,Not Started,Commit small coherent changes; never commit secrets.,,,Clean repo history
+115,Day 25,Project defence,Give a 2-minute and 5-minute SteelLens walkthrough.,Practice,Not Started,"Problem, data, method, validation, result, limitations, your contribution.",,,Recorded answer
+116,Day 25,Project defence,"Explain OptiVest AI backtesting, assumptions, constraints, costs and risks.",Practice,Not Started,Separate measured results from hypotheses and future features.,,,Recorded answer
+117,Day 26,Project defence,Explain QuantOpt from actual current implementation; identify one trade-off.,Practice,Not Started,Don't claim features not implemented; show evidence.,,,Recorded answer
+118,Day 26,Research literacy,"Explain baseline, ablation, data leakage, overfitting and reproducibility.",Intermediate,Not Started,Use one example from your projects.,,,Oral answers
+119,Day 27,Mock interview,45-minute technical mock: coding + SQL + core CS.,Practice,Not Started,Speak while reasoning; ask clarifying questions.,,,Scorecard
+120,Day 27,Mock interview,20-minute HR/behavioral mock.,Practice,Not Started,Use specific examples and concise structure.,,,Scorecard
+121,Day 28,Weakness repair,Redo the 10 lowest-confidence questions without notes.,Practice,Not Started,"If stuck, take a hint then re-solve later.",,,Before/after results
+122,Day 28,Assessment simulation,Timed aptitude + pseudo-code + SQL + 2 coding questions.,Practice,Not Started,Follow the time limits and avoid pausing the timer.,,,Score + analysis
+123,Day 29,Portfolio review,"Run tests, clean README, verify setup instructions and list honest limitations.",Practice,Not Started,A reviewer should reproduce a key result.,,,Evidence checklist
+124,Day 29,Application quality,Review resume bullets against 3 real job descriptions; improve evidence and keywords honestly.,Practice,Not Started,"Do not invent metrics, tools or responsibilities.",,,Updated resume
+125,Day 30,Final assessment,Repeat baseline coding questions and aptitude set; compare performance.,Practice,Not Started,"Compare accuracy, time, hints and explanation quality.",,,Before/after report
+126,Day 30,Next-cycle plan,Choose next 30-day focus using actual results and interview pipeline.,Practice,Not Started,Prioritize bottlenecks instead of adding random topics.,,,Next plan

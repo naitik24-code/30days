@@ -1,0 +1,88 @@
+﻿No.,Day,Section,Question / Topic,Priority,Status,PDF / Day,PDF Status
+1,Day 1,Coding,Password Checker,Must Master,Done,PDF1 — Day 1,Done
+2,Day 1,Coding,Find Maximum Element in Array,Must Master,Done,PDF2 — Day 1,Done
+3,Day 1,Coding,Find Maximum Element and Its Index,Must Master,Done,PDF3 — Day 1,Done
+4,Day 1,Coding,Find Second Largest Element,Must Master,Done,PDF4 — Day 2,Done
+5,Day 1,Coding,Reverse String,Must Master,Done,PDF5 — Day 2,Done
+6,Day 1,Coding,Reverse Words in a String,Must Master,Done,PDF6 — Day 2,Done
+7,Day 1,Coding,Check Palindrome String,Must Master,Done,PDF7 — Day 3,Done
+8,Day 1,Coding,Find Missing Element in Array,Must Master,Done,PDF8 — Day 3,Done
+9,Day 2,Coding,Remove Duplicates from Array,Must Master,Done,PDF9 — Day 3,Done
+10,Day 2,Coding,Count Occurrences of Each Element,Must Master,Done,PDF10 — Day 4,Done
+11,Day 2,Coding,Find Intersection of Two Arrays,Must Master,Done,PDF11 — Day 4,Done
+12,Day 2,Coding,Merge Two Sorted Arrays,Must Master,Done,PDF12 — Day 4,Done
+13,Day 2,Coding,Longest Substring Without Repeating Characters,Must Master,Done,PDF13 — Day 5,Done
+14,Day 2,Coding,Binary Operations — AND / OR / XOR,Must Master,Done,PDF14 — Day 5,Done
+15,Day 2,Coding,Rat Count House,Must Master,Done,PDF15 — Day 5,Done
+16,Day 2,Coding,Difference of Sum,Must Master,Done,PDF16 — Day 6,Done
+17,Day 3,Coding,Operation Choices,Must Master,Done,PDF17 — Day 6,Done
+18,Day 3,Coding,Decimal to N-Base,Must Master,Done,PDF18 — Day 6,Done
+19,Day 3,Coding,Product Smallest Pair,Must Master,Done,PDF19 — Day 7,Done
+20,Day 3,Coding,Large Small Sum,Must Master,Done,PDF20 — Day 7,Done
+21,Day 3,Coding,Anagram Check,Very Important,Done,PDF21 — Day 7,Done
+22,Day 3,Coding,Find K Largest Elements,Very Important,Done,PDF22 — Day 8,Done
+23,Day 3,Coding,Rotate Array by K,Very Important,Done,PDF23 — Day 8,Done
+24,Day 3,Coding,Equilibrium Sum / Index,Very Important,Done,PDF24 — Day 8,Done
+25,Day 4,Coding,Move Hyphen to Front,Very Important,Done,PDF25 — Day 9,Done
+26,Day 4,Coding,Replace Character,Very Important,Done,PDF26 — Day 9,Done
+27,Day 4,Coding,Replace Frequent Characters,Very Important,Done,PDF27 — Day 9,Done
+28,Day 4,Coding,Most Frequent Vowel,Very Important,Done,PDF28 — Day 10,Done
+29,Day 4,Coding,Number of Carries,Very Important,Done,PDF29 — Day 10,Done
+30,Day 4,Coding,Maximum Exponent of 2,Very Important,Done,PDF30 — Day 10,Done
+31,Day 4,Coding,Sum of Numbers Divisible by 3 and 5,Very Important,Done,PDF31 — Day 11,Done
+32,Day 4,Coding,Fibonacci Series,Very Important,Done,PDF32 — Day 11,Done
+33,Day 5,Coding,Reverse Linked List,Very Important,Done,PDF33 — Day 11,Done
+34,Day 5,Coding,Check Palindrome Linked List,Very Important,Done,PDF34 — Day 12,Done
+35,Day 5,Coding,Implement Stack Using Array,Very Important,Not Done,PDF35 — Day 12,Done
+36,Day 5,Coding,Implement Queue Using Array,Very Important,Not Done,PDF36 — Day 12,Done
+37,Day 5,Coding,Binary Search,Very Important,Done,PDF37 — Day 13,Done
+38,Day 5,Coding,LCA of Binary Tree,Very Important,Done,PDF38 — Day 13,Done
+39,Day 5,Coding,Check Whether Binary Tree is BST,Very Important,Not Done,PDF39 — Day 14,Done
+40,Day 5,Coding,Binary Tree Traversals,Very Important,Done,PDF40 — Day 14,Done
+41,Day 6,Coding,Factorial of a Number,Very Important,Done,,
+42,Day 6,Coding,Compare two strings without using strcmp(),Very Important,Done,,
+43,Day 6,Coding,Concatenate two strings,Very Important,Not Done,,
+44,Day 6,Coding,Interchange / swap two variables without using a third variable,Very Important,Done,,
+45,Day 6,Coding,Binary to Decimal,Important,Done,,
+46,Day 6,Coding,Decimal to Binary,Important,Done,,
+47,Day 6,Coding,Encode Number,Important,Not Done,,
+48,Day 6,Coding,Sum of Binary Numbers,Important,Done,,
+49,Day 7,Coding,Binary / Bit Manipulation Variations,Important,Not Done,,
+50,Day 7,Coding,Length of Last Word,Important,Not Done,,
+51,Day 7,Coding,Find Longest Word,Important,Not Done,,
+52,Day 7,Coding,Vowel Repetition,Important,Not Done,,
+53,Day 7,Coding,Vowel Permutation,Important,Not Done,,
+54,Day 7,Coding,String Decoder,Important,Not Done,,
+55,Day 7,Coding,Chocolate Distribution,Important,Not Done,,
+56,Day 7,Coding,Set Zero Matrix,Important,Not Done,,
+57,Day 8,Coding,Matrix Operations,Important,Not Done,,
+58,Day 8,Coding,Maximum Difference Between Successive Elements,Important,Not Done,,
+59,Day 8,Coding,Small Large Sum,Important,Not Done,,
+60,Day 8,Coding,Absolute Difference,Important,Not Done,,
+61,Day 8,Coding,Sum of Prime Numbers,Important,Not Done,,
+62,Day 8,Coding,Sum of Divisors,Important,Not Done,,
+63,Day 8,Coding,Nth Fibonacci,Important,Not Done,,
+64,Day 8,Coding,Write a Program Using Recursion,Important,Not Done,,
+65,Day 9,Coding,"Use String Functions such as strcmp(), strcpy(), etc.",Important,Not Done,,
+66,Day 9,Coding,Dynamically Allocate a One-Dimensional Array of Integers,Important,Not Done,,
+67,Day 9,Coding,Dynamically Allocate a Two-Dimensional Array of Integers,Important,Not Done,,
+68,Day 9,Coding,Write a Program Using Command Line Arguments (argc/argv),Important,Not Done,,
+69,Day 9,Coding,Negative Stock Price,Other Important,Not Done,,
+70,Day 9,Coding,Maximum Favourite Song,Other Important,Not Done,,
+71,Day 9,Coding,Elevation Point,Other Important,Not Done,,
+72,Day 9,Coding,Print First K Words,Other Important,Not Done,,
+73,Day 10,Coding,Repeated String,Other Important,Not Done,,
+74,Day 10,Coding,Magical Number,Other Important,Not Done,,
+75,Day 10,Coding,Googly Prime Number,Other Important,Not Done,,
+76,Day 10,Coding,Print Even and Odd,Other Important,Not Done,,
+77,Day 10,Coding,Floyd's Triangle,Other Important,Not Done,,
+78,Day 10,Coding,Table of Number + Sum of Multiples,Other Important,Not Done,,
+79,Day 10,Coding,Sum of Even Index Elements,Other Important,Not Done,,
+80,Day 10,Coding,Roots,Other Important,Not Done,,
+81,Day 11,Coding,Standard Deviation,Other Important,Not Done,,
+82,Day 11,Coding,Linked List with Random Pointer,Other Important,Not Done,,
+83,Day 11,Coding,Basic Linked List Operations,Other Important,Not Done,,
+84,Day 11,Coding,Linear Search,Other Important,Not Done,,
+85,Day 11,Coding,Find Level / Height of Binary Tree,Other Important,Not Done,,
+86,Day 11,Coding,Rat in a Maze,Other Important,Not Done,,
+87,Day 11,Coding,Pair Sum / Maximum Product,Other Important,Not Done,,
