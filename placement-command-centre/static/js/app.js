@@ -26,7 +26,7 @@ function dateLabel(date){return new Intl.DateTimeFormat(undefined,{weekday:'long
 function showPage(name){$$('.page').forEach(page=>page.classList.toggle('active',page.id===`page-${name}`));$$('[data-page]').forEach(button=>button.classList.toggle('active',button.dataset.page===name));if(name==='practice')loadPractice();if(name==='career')loadCareer();if(name==='progress')loadProgress();if(name==='library')loadLibrary();if(name==='settings')loadSettings();window.scrollTo({top:0,behavior:'smooth'})}
 function renderDay(data){state.day=data;const [yy,mm,dd]=data.date.split('-').map(Number);const current=new Date(yy,mm-1,dd);$('#top-date').textContent=dateLabel(current);$('#welcome-date').textContent=dateLabel(current);$('#progress-date').textContent=current.toLocaleDateString(undefined,{month:'long',year:'numeric'});$('#day-number').textContent=`DAY ${String(data.day_number).padStart(2,'0')} / 30`;
   const activity=new Map(data.history.map(day=>[day.date,day]));const trail=$('#trail');trail.innerHTML='';for(let index=0;index<30;index++){const date=new Date(current);date.setDate(date.getDate()-data.day_number+1+index);const iso=`${date.getFullYear()}-${String(date.getMonth()+1).padStart(2,'0')}-${String(date.getDate()).padStart(2,'0')}`;const entry=activity.get(iso);const done=Number(entry?.done||0),total=Number(entry?.total||0);const dot=document.createElement('button');dot.className=`trail-dot${done&&total&&done===total?' done':done?' partial':''}${iso===data.date?' today':''}`;dot.style.setProperty('--i',index);dot.title=`${dateLabel(date)} · ${done}/${total} complete`;dot.setAttribute('aria-label',dot.title);trail.append(dot)}
-  const doneCount=data.tasks.filter(task=>task.done).length;$('#check-count').textContent=`${doneCount} / ${data.tasks.length}`;$('#checklist').innerHTML=data.tasks.map(task=>`<div class="check-row ${task.done?'checked':''}"><button class="check-toggle" data-task="${task.id}" data-done="${!task.done}" aria-label="${task.done?'Mark incomplete':'Mark complete'}">✓</button><span class="check-title">${escapeHTML(task.title)}</span><span class="task-meta">${task.done?'DONE':'TODAY'}</span></div>`).join('');$('#checklist').onclick=async event=>{const button=event.target.closest('[data-task]');if(!button)return;try{await api(`/api/checklist/${button.dataset.task}`,{method:'PATCH',body:JSON.stringify({done:button.dataset.done==='true'})});await refresh();if(button.dataset.done==='true'&&$('#check-count').textContent.split('/')[0].trim()===$('#check-count').textContent.split('/')[1].trim())toast('You showed up for every task today.')}catch(error){toast(error.message)}};
+  const doneCount=data.tasks.filter(task=>task.done).length;$('#check-count').textContent=`${doneCount} / ${data.tasks.length}`;$('#checklist').innerHTML=data.tasks.map(task=>`<div class="check-row ${task.done?'checked':''}" data-task="${task.id}" data-done="${!task.done}"><button class="check-toggle" data-task="${task.id}" data-done="${!task.done}" aria-label="${task.done?'Mark incomplete':'Mark complete'}">✓</button><span class="check-title">${escapeHTML(task.title)}</span><span class="task-meta">${task.done?'DONE':'TODAY'}</span></div>`).join('');
   const next=data.tasks.find(task=>!task.done);$('#next-title').textContent=next?next.title:'You completed today’s list';$('#next-description').textContent=next?'Start with one focused session. You can log the rest as you go.':'Take a breath and write down one thing that went well.';$('#setup-nudge').hidden=data.tasks.some(task=>task.done)||data.day_number>1;$('#reflection').value=data.record.reflection||'';if(data.record.reflection)$('#reflection-status').textContent='Saved';$('#light-day').textContent=data.record.light_day?'☼ Light day on':'☼ Light day';
   $('#sleep-value').textContent=data.record.sleep??'—';$('#aptitude-value').textContent=data.record.aptitude??'—';const energy=$('#energy-scale');energy.innerHTML=Array.from({length:5},(_,i)=>`<button data-energy="${i+1}" class="${data.record.energy===i+1?'selected':''}" aria-label="Energy ${i+1} of 5"></button>`).join('');renderRoadmap(data.roadmap);renderStarter(data.starter);renderScorecard(data.record);loadSchedule();refreshStats();loadFocusTotal()}
 async function refresh(){try{renderDay(await api('/api/today'))}catch(error){toast(error.message)}}
@@ -52,6 +52,23 @@ async function loadSettings(){try{const settings=await api('/api/settings');$$('
 function applyTheme(theme){document.body.dataset.theme=theme;if(theme==='light'){Object.assign(document.body.style,{colorScheme:'light',backgroundColor:'#f1f4fa',color:'#17213a'});const root=document.documentElement;root.style.setProperty('--bg','#f1f4fa');root.style.setProperty('--panel','#fff');root.style.setProperty('--panel2','#e8edf7');root.style.setProperty('--line','#d9e0ed');root.style.setProperty('--line-soft','rgba(39,57,91,.13)');root.style.setProperty('--text','#17213a');root.style.setProperty('--muted','#687590');root.style.setProperty('--blue','#416fe3');root.style.setProperty('--violet','#7654db');root.style.setProperty('--mint','#168c62');root.style.setProperty('--amber','#b96a03')}else{document.body.removeAttribute('style');['--bg','--panel','--panel2','--line','--line-soft','--text','--muted','--blue','--violet','--mint','--amber'].forEach(name=>document.documentElement.style.removeProperty(name))}}
 let quickValues={sleep:null,aptitude:null};
 document.addEventListener('click',async event=>{
+  const check=event.target.closest('[data-task]');
+  if(check){
+    const taskId=check.dataset.task;
+    const nextDone=check.dataset.done==='true';
+    check.classList.toggle('checked', nextDone);
+    check.dataset.done=String(!nextDone);
+    try{
+      await api(`/api/checklist/${taskId}`,{method:'PATCH',body:JSON.stringify({done:nextDone})});
+      await refresh();
+      if(nextDone&&$('#check-count').textContent.split('/')[0].trim()===$('#check-count').textContent.split('/')[1].trim())toast('You showed up for every task today.');
+    }catch(error){
+      check.classList.toggle('checked', !nextDone);
+      check.dataset.done=String(nextDone);
+      toast(error.message);
+    }
+    return;
+  }
   const page=event.target.closest('[data-page]');if(page){showPage(page.dataset.page);return}
   const create=event.target.closest('[data-create]');if(create){openEntry(create.dataset.create);return}
   const tab=event.target.closest('#practice-tabs button');if(tab){$$('#practice-tabs button').forEach(item=>item.classList.toggle('selected',item===tab));loadPractice();return}
